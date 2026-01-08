@@ -1,0 +1,111 @@
+<style>
+  .search-btn{
+    background-color: #fe424d;
+    color: #fff;
+    border-radius: 25px;
+    padding: 0 1rem 0 1rem;
+  }
+  .search-btn:hover{
+    background-color: #fe424d;
+    color: #fff;
+  }
+  .search-btn i {
+    margin-right: 0.45rem;
+    display:inline;
+  }
+  .search-inp{
+    border-radius: 25px;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    font-size: 0.9rem;
+  }
+  .Search{
+    margin-left: 22rem;
+  }
+</style>
+<nav class="navbar navbar-expand-md bg-body-light border-bottom fixed-top">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+    </a>
+
+    <!-- MOBILE TOGGLER -->
+    <button class="navbar-toggler d-md-none" type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#mobileNav"
+      aria-controls="mobileNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- DESKTOP NAVBAR -->
+    <div class="d-none d-md-flex w-100 align-items-center">
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings">Explore</a>
+        </li>
+      </ul>
+      <div class="Search">
+      <form class="d-flex mx-auto " role="search">
+        <input class="form-control me-2 search-inp"
+               type="search"
+               placeholder="Search destination">
+        <button class="btn search-btn" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>Search
+        </button>
+      </form>
+      </div>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        </li>
+
+        <% if(!userCurr){ %>
+          <li class="nav-item"><a class="nav-link" href="/signup"><b>Signup</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="/login"><b>Login</b></a></li>
+        <% } %>
+
+        <% if(userCurr){ %>
+          <li class="nav-item"><a class="nav-link" href="/logout"><b>Logout</b></a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- MOBILE OFFCANVAS MENU -->
+<div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileNav">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">WanderLust</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+
+    <!-- SEARCH -->
+    <form class="mb-3" role="search">
+      <input class="form-control mb-2 search-inp"
+             type="search"
+             placeholder="Search destination">
+      <button class="btn search-btn w-100" type="submit">
+        <i class="fa-solid fa-magnifying-glass"></i> Search
+      </button>
+    </form>
+
+    <!-- LINKS -->
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="/listings">Explore</a></li>
+      <li class="nav-item"><a class="nav-link" href="/listings/new">Airbnb your home</a></li>
+
+      <% if(!userCurr){ %>
+        <li class="nav-item"><a class="nav-link" href="/signup"><b>Signup</b></a></li>
+        <li class="nav-item"><a class="nav-link" href="/login"><b>Login</b></a></li>
+      <% } %>
+
+      <% if(userCurr){ %>
+        <li class="nav-item"><a class="nav-link" href="/logout"><b>Logout</b></a></li>
+      <% } %>
+    </ul>
+
+  </div>
+</div>
+
