@@ -1,93 +1,127 @@
 <%- layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-  <div class="col-8 offset-3">
-    <h3 class="show-list-h3"><b><%= listing.title %></b></h3>
+<!-- TITLE -->
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h3 class="show-list-h3"><b><%= listing.title %></b></h3>
+    </div>
   </div>
 </div>
 
-<div class="card col-6 list-card">
-  <img src="<%= listing.image.url %>" class="card-img-top show-img offset-6" alt="listing_img">
-  <div class="card-body col-12 offset-6">
-    <p class="card-text">
-      Owned by: <i><%= listing.owner.username %></i><br>
-      <%= listing.description %><br>
-      <b>&#8377;<%= listing.price.toLocaleString("en-IN") %>/night</b><br>
-      <%= listing.location %><br>
-      <%= listing.country %>
-    </p>
+<!-- LISTING CARD -->
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <div class="card list-card">
+        <img 
+          src="<%= listing.image.url %>" 
+          class="card-img-top show-img img-fluid"
+          alt="listing_img"
+        >
+
+        <div class="card-body">
+          <p class="card-text">
+            Owned by: <i><%= listing.owner.username %></i><br>
+            <%= listing.description %><br>
+            <b>&#8377;<%= listing.price.toLocaleString("en-IN") %>/night</b><br>
+            <%= listing.location %><br>
+            <%= listing.country %>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- EDIT / DELETE -->
 <% if(userCurr && userCurr._id.equals(listing.owner._id)){ %>
-  <div class="btns offset-3 mt-3">
-    <form method="get" action="/listings/<%= listing._id %>/edit">
-      <button class="btn offset-2 edit-btn">Edit</button>
-    </form>
-    <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
-      <button class="btn btn-dark offset-4">Delete</button>
-    </form>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 d-flex gap-3">
+      <form method="get" action="/listings/<%= listing._id %>/edit">
+        <button class="btn edit-btn">Edit</button>
+      </form>
+      <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+        <button class="btn btn-dark">Delete</button>
+      </form>
+    </div>
   </div>
+</div>
 <% } %>
 
 <hr>
 
+<!-- LEAVE REVIEW -->
 <% if(userCurr){ %>
-  <div class="col-8 offset-3">
-    <h4>Leave a Review</h4>
-    <form method="post" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation">
-      <input type="hidden" name="review[rating]" id="ratingInput" min="1" max="5" required>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h4>Leave a Review</h4>
 
-      <div class="star-rating">
-        <span class="star" data-value="1">&#9733;</span>
-        <span class="star" data-value="2">&#9733;</span>
-        <span class="star" data-value="3">&#9733;</span>
-        <span class="star" data-value="4">&#9733;</span>
-        <span class="star" data-value="5">&#9733;</span>
-      </div>
+      <form method="post" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation">
+        <input type="hidden" name="review[rating]" id="ratingInput" required>
 
-      <div>
-        <label for="comment" class="form-label">Comments</label>
-        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
-        <div class="invalid-feedback">
-          Please add some comments for reviews
+        <div class="star-rating mb-2">
+          <span class="star" data-value="1">&#9733;</span>
+          <span class="star" data-value="2">&#9733;</span>
+          <span class="star" data-value="3">&#9733;</span>
+          <span class="star" data-value="4">&#9733;</span>
+          <span class="star" data-value="5">&#9733;</span>
         </div>
-      </div>
-      <br>
-      <button class="btn btn-outline-dark mb-3">Submit</button>
-    </form>
+
+        <label class="form-label">Comments</label>
+        <textarea name="review[comment]" class="form-control" rows="4" required></textarea>
+
+        <button class="btn btn-outline-dark mt-3">Submit</button>
+      </form>
+    </div>
   </div>
-  <hr>
+</div>
 <% } %>
 
-<div class="col-8 offset-3">
-  <h4>All Reviews</h4>
-  <div class="row">
-    <% for(let review of listing.reviews){ %>
-      <div class="card col-md-5 pt-2 ms-3 mb-3 pb-2">
-        <div class="card-body">
-          <h5 class="card-title">@<%= review.author.username %></h5>
-          <p class="card-text"><%= review.comment %></p>
-          <p class="card-text"><%= review.rating %> Stars</p>
-        </div>
+<hr>
 
-        <% if(userCurr && userCurr._id.equals(review.author._id)){ %>
-          <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-            <button class="btn btn-sm btn-dark">Delete</button>
-          </form>
+<!-- ALL REVIEWS -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h4>All Reviews</h4>
+
+      <div class="row">
+        <% for(let review of listing.reviews){ %>
+        <div class="col-12 col-md-6 mb-3">
+          <div class="card p-2">
+            <h6>@<%= review.author.username %></h6>
+            <p><%= review.comment %></p>
+            <p><%= review.rating %> Stars</p>
+
+            <% if(userCurr && userCurr._id.equals(review.author._id)){ %>
+            <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+              <button class="btn btn-sm btn-dark">Delete</button>
+            </form>
+            <% } %>
+          </div>
+        </div>
         <% } %>
       </div>
-    <% } %>
+    </div>
   </div>
 </div>
 
 <hr>
 
-<div class="col-8 offset-3">
-  <h3>Where you'll be</h3>
-  <div id="map"></div>
+<!-- MAP -->
+<div class="container mt-4 mb-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h3>Where you'll be</h3>
+      <div id="map" style="height:300px; width:100%;"></div>
+    </div>
+  </div>
 </div>
 
+<!-- MAP DATA -->
 <script>
   const listingGeo = <%- JSON.stringify(listing.geometry) %>;
 </script>
